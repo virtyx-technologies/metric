@@ -24,5 +24,5 @@ cpu_usage{service="nginx",host="machine1"} 34.6 1494595898000
 
 ```
 r := &metric.Response{}
-r.Value("system.cpu.percent", 33.33, nil)
+r.Value("system.cpu.percent", 33.33, map[string]interface{}{"hostname": "my-great-hostname"})
 ```
