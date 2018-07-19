@@ -1,6 +1,7 @@
 package metric
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,6 +10,23 @@ import (
 func TestMetricString(t *testing.T) {
 	metric := &Metric{Name: "system.cpu.percent", Value: 1, Tags: nil}
 	assert.Equal(t, "system.cpu.percent|1.000000|null", metric.String())
+}
+
+func TestMetricJson(t *testing.T) {
+	metric := &Metric{Name: "system.cpu.percent", Value: 1, Tags: map[string]interface{}{"hostname": "my-great-hostname"}}
+	json, err := json.Marshal(metric)
+	assert.Nil(t, err)
+	assert.Contains(t, string(json), `"name":"system.cpu.percent"`)
+	assert.Contains(t, string(json), `"value":1`)
+	assert.Contains(t, string(json), `"tags":{"hostname":"my-great-hostname"}`)
+}
+
+func TestMetadataJson(t *testing.T) {
+	meta := &Metadata{Name: "metadata", Data: "cool"}
+	json, err := json.Marshal(meta)
+	assert.Nil(t, err)
+	assert.Contains(t, string(json), `"name":"metadata"`)
+	assert.Contains(t, string(json), `"data":"cool"`)
 }
 
 func TestMetadataString(t *testing.T) {

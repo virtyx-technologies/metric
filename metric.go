@@ -28,7 +28,7 @@ type (
 
 	// Encapsulates metadata (textual information) captured by a plugin
 	Metadata struct {
-		Name string `json:"type"` // The metadata name
+		Name string `json:"name"` // The metadata name
 		Data string `json:"data"` // The data captured
 	}
 )
